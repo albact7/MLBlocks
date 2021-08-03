@@ -691,6 +691,13 @@ class MLPipeline():
                         variable_name = '{}.{}'.format(block_name, key)
                         self._update_outputs(variable_name, output_variables, outputs, value)
 
+            print("_________________ OUTPUT PRODUCE BLOCK ____________________")
+            for k in outputs_dict.keys():
+                #print(len(outputs_dict[k]))
+                print(outputs_dict[k].shape)
+            print(outputs_dict)
+            
+
             if debug_info is not None:
                 debug = debug_info['debug']
                 record = {}
@@ -799,6 +806,9 @@ class MLPipeline():
                     LOGGER.debug('Skipping block %s fit', block_name)
                     continue
 
+            print()
+            print("______________ BLOCK ________________")
+            print(block)
             self._fit_block(block, block_name, context, debug_info)
 
             if fit_pending or output_blocks:
@@ -888,6 +898,8 @@ class MLPipeline():
                   returned are the predictions and the second a dictionary containing the debug
                   information.
         """
+        print("__________________ about to predict _______________________")
+        print(X.shape)
         context = kwargs.copy()
         if X is not None:
             context['X'] = X
@@ -909,7 +921,9 @@ class MLPipeline():
                 else:
                     LOGGER.debug('Skipping block %s produce', block_name)
                     continue
-
+            print()
+            print("______________ BLOCK ________________")
+            print(block)
             self._produce_block(block, block_name, context, output_variables, outputs, debug_info)
 
             # We already captured the output from this block
